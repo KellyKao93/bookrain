@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>特別的訊息</title>
+    <style>
+        /* 1. 將網頁設為純白底 */
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #ffffff; /* 純白底 */
+            font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+            overflow: hidden; /* 防止愛心飛出螢幕出現滾動條 */
+            position: relative;
+        }
+
+        /* 2. 可愛蓬鬆質感卡片設計 */
+        .card {
+            background: #ffffff;
+            padding: 50px 30px;
+            border-radius: 40px; /* 增加圓角，更有可愛感 */
+            box-shadow: 0 15px 45px rgba(255, 182, 193, 0.4); /* 粉色系陰影，讓卡片像浮起來 */
+            max-width: 350px;
+            width: 85%;
+            text-align: center;
+            /* 淺粉色細邊框，增加層次感 */
+            border: 1px solid rgba(255, 128, 171, 0.1);
+            cursor: pointer;
+            transition: all 0.5s ease;
+            z-index: 10; /* 確保卡片在飛舞愛心上面 */
+            position: relative;
+        }
+
+        /* 卡片上增加一個小裝飾：小翅膀愛心 */
+        .card::before {
+            content: "♥給書瑀的信♥";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff80ab;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(255, 128, 171, 0.3);
+        }
+
+        #text-content {
+            font-size: 1.15rem;
+            color: #6d5c5c; /* 暖咖啡色文字，比純黑溫柔 */
+            line-height: 1.8;
+            min-height: 120px;
+            white-space: pre-wrap;
+            transition: opacity 0.4s;
+            padding-top: 15px; /* 為上面的標籤騰出空間 */
+        }
+
+        .btn-group {
+            display: none;
+            margin-top: 30px;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 25px; /* 更圓潤的按鈕 */
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        button:active { transform: scale(0.95); }
+
+        .yes-btn { 
+            background-color: #ff80ab; /* 玫瑰粉 */
+            color: white; 
+            box-shadow: 0 4px 10px rgba(255, 128, 171, 0.4);
+        }
+
+        .maybe-btn { 
+            background-color: #fce4ec; /* 淺粉 */
+            color: #ad8a8a; 
+        }
+
+        .hint { color: #d1b8b8; font-size: 0.85rem; margin-top: 20px; }
+
+        /* 3. 動態愛心粒子系統的樣式 */
+        .heart-particle {
+            position: absolute;
+            font-size: 20px;
+            color: #ffb6c1; /* 淺粉色愛心 */
+            user-select: none;
+            z-index: 1;
+            animation: riseAndFade 4s linear forwards;
+            opacity: 0;
+        }
+
+        /* 愛心飛舞並淡出的動畫 */
+        @keyframes riseAndFade {
+            0% {
+                transform: translateY(10vh) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.7; /* 飛出來時顯現 */
+                transform: translateY(5vh) scale(1) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-110vh) scale(1.2) rotate(15deg); /* 向上飛出螢幕 */
+                opacity: 0; /* 淡出 */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="particle-container"></div>
+
+<div class="card" id="card" onclick="nextStep()">
+    <div id="text-content">書瑀 有一段話想對妳說...</div>
+    <div class="hint" id="hint"> 點擊卡片繼續 ✨ </div>
+    <div class="btn-group" id="btn-group">
+        <button class="yes-btn" onclick="sendResponse('好，我也願意')">好 ❤️</button>
+        <button class="maybe-btn" onclick="sendResponse('??')">??</button>
+    </div>
+</div>
+
+<script>
+    // 保留你原來的內容和 Webhook URL
+    const messages = [
+        "其實，我這段時間一直在思考...",
+        "關於我們相處的點點滴滴。",
+        "妳的活潑、妳的開朗，<br>還有我們聊天的每一刻，",
+        "都讓我覺得，<br>充滿了活力與心動。",
+        "所以，我不想再只是當朋友了。",
+        "最後，我有一個很認真的問題..."
+    ];
+
+    // 這裡填入妳的 Discord Webhook 網址
+    const webhookURL = "https://discord.com/api/webhooks/1486689408504561695/iBd77xcOIcmDF_l8BX_acqxCdBVOE3uzzrelQNzCo0Dt8oFCtRQyG-BNHC8-ffHjAYOF";
+
+    let currentStep = -1;
+
+    function nextStep() {
+        currentStep++;
+        const textElement = document.getElementById('text-content');
+        if (currentStep < messages.length) {
+            textElement.style.opacity = 0;
+            setTimeout(() => {
+                textElement.innerHTML = messages[currentStep];
+                textElement.style.opacity = 1;
+            }, 300);
+        } else if (currentStep === messages.length) {
+            // 保留妳原來的最後一句話
+            textElement.innerHTML = "書瑀，妳願意跟我在一起嗎？";
+            document.getElementById('btn-group').style.display = 'flex';
+            document.getElementById('hint').style.visibility = 'hidden';
+            document.getElementById('card').onclick = null;
+        }
+    }
+
+    function sendResponse(answer) {
+        fetch(webhookURL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ content: `💖 告白回覆：**${answer}**` })
+        }).then(() => {
+            alert("謝謝妳的回覆，我收到了！");
+            // 點擊後畫面變乾淨的紅愛心
+            document.body.innerHTML = "<h1 style='color:#ff80ab; font-size: 5rem; z-index: 100;'>❤️</h1>";
+            // 清空愛心粒子
+            document.getElementById('particle-container').innerHTML = '';
+        });
+    }
+
+    // --- 4. 生成動態愛心的 JavaScript 邏輯 ---
+    function spawnHeart() {
+        const container = document.getElementById('particle-container');
+        const heart = document.createElement('div');
+        heart.classList.add('heart-particle');
+        heart.innerHTML = '❤️'; // 飛舞的愛心符號
+        
+        // 隨機設定水平位置 (0% ~ 100% 螢幕寬度)
+        const leftPos = Math.random() * 100;
+        heart.style.left = leftPos + 'vw';
+        
+        // 隨機設定飛舞速度 (3秒 ~ 5秒)
+        const duration = Math.random() * 2 + 3;
+        heart.style.animationDuration = duration + 's';
+        
+        // 隨機設定愛心大小 (15px ~ 25px)
+        const size = Math.random() * 10 + 15;
+        heart.style.fontSize = size + 'px';
+
+        // 隨機設定粉色色調，增加層次
+        const colors = ['#ffb6c1', '#ff80ab', '#fccbda', '#f8bbd0'];
+        heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+
+        container.appendChild(heart);
+
+        // 動畫結束後自動移除元素，防止消耗過多內存
+        setTimeout(() => {
+            heart.remove();
+        }, duration * 1000);
+    }
+
+    // 每 1.2 秒生成一個新的漂浮愛心
+    setInterval(spawnHeart, 1200);
+    // 初始化時先生成一個
+    spawnHeart();
+
+</script>
+</body>
+</html>
