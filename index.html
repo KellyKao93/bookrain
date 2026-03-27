@@ -56,7 +56,6 @@
             color: #7d6e6e;
             line-height: 2;
             white-space: pre-wrap;
-            /* 修正：縮短 transition 時間到 0.2s 讓切換更乾淨 */
             transition: opacity 0.2s ease-in-out; 
             display: flex;
             align-items: center;
@@ -113,13 +112,17 @@
 </head>
 <body>
 
+<audio id="bgMusic" loop>
+    <source src="Daydream.mp3" type="audio/mpeg">
+</audio>
+
 <div id="particle-container"></div>
 
 <div class="card" id="card" onclick="nextStep()">
     <div id="text-content">書瑀 有一段話想對妳說...</div>
     <div class="hint" id="hint"> 點擊卡片繼續 ✨ </div>
     <div class="btn-group" id="btn-group">
-        <button class="yes-btn" onclick="sendResponse('好，我也願意')">好</button>
+        <button class="yes-btn" onclick="sendResponse('好，我也願意')">好 ❤️</button>
         <button class="maybe-btn" onclick="sendResponse('??')">??</button>
     </div>
 </div>
@@ -136,9 +139,17 @@
     const webhookURL = "https://discord.com/api/webhooks/1486689408504561695/iBd77xcOIcmDF_l8BX_acqxCdBVOE3uzzrelQNzCo0Dt8oFCtRQyG-BNHC8-ffHjAYOF";
 
     let currentStep = -1;
+    let musicStarted = false;
 
     function nextStep() {
         const textElement = document.getElementById('text-content');
+        const music = document.getElementById('bgMusic');
+
+        // 第一次點擊時啟動音樂
+        if (!musicStarted) {
+            music.play().catch(e => console.log("音樂播放受限:", e));
+            musicStarted = true;
+        }
         
         // 1. 先讓文字完全消失
         textElement.style.opacity = 0;
@@ -149,7 +160,7 @@
             
             if (currentStep < messages.length) {
                 textElement.innerHTML = messages[currentStep];
-                textElement.style.opacity = 1; // 換完字立刻淡入
+                textElement.style.opacity = 1;
             } else if (currentStep === messages.length) {
                 textElement.innerHTML = "最後我想問妳 <br>妳願意給我照顧 <br>跟我在一起嗎？";
                 textElement.style.opacity = 1;
@@ -157,7 +168,7 @@
                 document.getElementById('hint').style.visibility = 'hidden';
                 document.getElementById('card').onclick = null;
             }
-        }, 215); // 稍微多給 10ms 緩衝，確保換字時舊字已完全透明
+        }, 215); 
     }
 
     function sendResponse(answer) {
