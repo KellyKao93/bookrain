@@ -119,7 +119,7 @@
     <div id="text-content">書瑀 有一段話想對妳說...</div>
     <div class="hint" id="hint"> 點擊卡片繼續 ✨ </div>
     <div class="btn-group" id="btn-group">
-        <button class="yes-btn" onclick="sendResponse('好，我也願意')">好 ❤️</button>
+        <button class="yes-btn" onclick="sendResponse('好，我也願意')">好</button>
         <button class="maybe-btn" onclick="sendResponse('??')">??</button>
     </div>
 </div>
@@ -157,7 +157,7 @@
                 document.getElementById('hint').style.visibility = 'hidden';
                 document.getElementById('card').onclick = null;
             }
-        }, 210); // 稍微多給 10ms 緩衝，確保換字時舊字已完全透明
+        }, 215); // 稍微多給 10ms 緩衝，確保換字時舊字已完全透明
     }
 
     function sendResponse(answer) {
@@ -166,7 +166,7 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ content: `💖 告白回覆：**${answer}**` })
         }).then(() => {
-            alert("謝謝妳的回覆，我收到了！");
+            alert("謝謝妳的回覆 我收到了！");
             document.body.innerHTML = "<h1 style='color:#ff80ab; font-size: 5rem; z-index: 100;'>❤️</h1>";
         });
     }
@@ -175,7 +175,7 @@
         const container = document.getElementById('particle-container');
         const heart = document.createElement('div');
         heart.classList.add('heart-particle');
-        heart.innerHTML = '❤️';
+        heart.innerHTML = '已收到 我收信看一下 (๑´ㅂ`๑) ';
         const leftPos = Math.random() * 100;
         heart.style.left = leftPos + 'vw';
         const duration = Math.random() * 2 + 3;
