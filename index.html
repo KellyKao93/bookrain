@@ -130,7 +130,7 @@
 <script>
     const messages = [
         "妳曾說過 <br>我是個內斂的人",
-        "確實 <br>身為 INTJ <br>我可能不太擅長說些感性的話",
+        "確實 <br>身為INTJ的我 <br>可能不太擅長說些感性的話",
         "妳也問過我 <br>我是不是很會照顧人 <br>而我當時回答妳說「看人」",
         "現在我想告訴妳 <br>我想照顧的人是誰了",
         "答案就是妳 書瑀 <br>妳就是我想照顧的那個人"
@@ -145,16 +145,13 @@
         const textElement = document.getElementById('text-content');
         const music = document.getElementById('bgMusic');
 
-        // 第一次點擊時啟動音樂
         if (!musicStarted) {
             music.play().catch(e => console.log("音樂播放受限:", e));
             musicStarted = true;
         }
         
-        // 1. 先讓文字完全消失
         textElement.style.opacity = 0;
 
-        // 2. 等淡出動畫結束 (200ms) 後再換字並淡入
         setTimeout(() => {
             currentStep++;
             
@@ -177,8 +174,20 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ content: `💖 告白回覆：**${answer}**` })
         }).then(() => {
-            alert("謝謝妳的回覆 我收到了！");
-            document.body.innerHTML = "<h1 style='color:#ff80ab; font-size: 5rem; z-index: 100;'>❤️</h1>";
+            // --- 修改部分：不要清空 body，只修改卡片內容 ---
+            const textElement = document.getElementById('text-content');
+            const btnGroup = document.getElementById('btn-group');
+            
+            // 隱藏按鈕
+            btnGroup.style.display = 'none';
+            // 顯示已收到
+            textElement.style.opacity = 0;
+            setTimeout(() => {
+                textElement.innerHTML = "訊息已收到 ❤️";
+                textElement.style.opacity = 1;
+            }, 215);
+            
+            alert("已收到 鈺涵看看結果 ・ω・");
         });
     }
 
