@@ -37,7 +37,7 @@
 
         /* 卡片上增加一個小裝飾：小翅膀愛心 */
         .card::before {
-            content: "♥給書瑀的信♥";
+            content: "♥給書瑀♥";
             position: absolute;
             top: -15px;
             left: 50%;
@@ -129,7 +129,7 @@
     <div id="text-content">書瑀 有一段話想對妳說...</div>
     <div class="hint" id="hint"> 點擊卡片繼續 ✨ </div>
     <div class="btn-group" id="btn-group">
-        <button class="yes-btn" onclick="sendResponse('好，我也願意')">好 ❤️</button>
+        <button class="yes-btn" onclick="sendResponse('好，我也願意')">好</button>
         <button class="maybe-btn" onclick="sendResponse('??')">??</button>
     </div>
 </div>
@@ -137,12 +137,11 @@
 <script>
     // 保留你原來的內容和 Webhook URL
     const messages = [
-        "其實，我這段時間一直在思考...",
-        "關於我們相處的點點滴滴。",
-        "妳的活潑、妳的開朗，<br>還有我們聊天的每一刻，",
-        "都讓我覺得，<br>充滿了活力與心動。",
-        "所以，我不想再只是當朋友了。",
-        "最後，我有一個很認真的問題..."
+        "妳曾說過 <br>我是個內斂的人",
+        "確實 <br>身為 INTJ <br>我可能不太擅長說些感性的話",
+        "妳也問過我 <br>我是不是很會照顧人 <br>而我當時回答妳說 看人
+        "現在我想告訴妳我想照顧的人是誰了",
+        "妳書瑀 <br>就是我想照顧的那個人",
     ];
 
     // 這裡填入妳的 Discord Webhook 網址
@@ -161,7 +160,7 @@
             }, 300);
         } else if (currentStep === messages.length) {
             // 保留妳原來的最後一句話
-            textElement.innerHTML = "書瑀，妳願意跟我在一起嗎？";
+            textElement.innerHTML = "最後我想問妳 <br>妳願意給我照顧 跟我再一起嗎";
             document.getElementById('btn-group').style.display = 'flex';
             document.getElementById('hint').style.visibility = 'hidden';
             document.getElementById('card').onclick = null;
