@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>e給書瑀</title>
+    <title>給書瑀</title>
     <style>
         /* 1. 將網頁設為純白底 */
         body {
@@ -13,8 +13,8 @@
             align-items: center;
             min-height: 100vh;
             background: #ffffff; /* 純白底 */
-            font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
-            overflow: hidden; /* 防止愛心飛出螢幕出現滾動條 */
+            font-family: "Quicksand", "PingFang TC", "Microsoft JhengHei", sans-serif;
+            overflow: hidden;
             position: relative;
         }
 
@@ -22,20 +22,22 @@
         .card {
             background: #ffffff;
             padding: 50px 30px;
-            border-radius: 40px; /* 增加圓角，更有可愛感 */
-            box-shadow: 0 15px 45px rgba(255, 182, 193, 0.4); /* 粉色系陰影，讓卡片像浮起來 */
+            border-radius: 40px;
+            box-shadow: 0 15px 45px rgba(255, 182, 193, 0.4);
             max-width: 350px;
             width: 85%;
             text-align: center;
-            /* 淺粉色細邊框，增加層次感 */
             border: 1px solid rgba(255, 128, 171, 0.1);
             cursor: pointer;
             transition: all 0.5s ease;
-            z-index: 10; /* 確保卡片在飛舞愛心上面 */
+            z-index: 10;
             position: relative;
+            min-height: 250px; /* 固定最小高度，確保文字置中效果明顯 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
-        /* 卡片上增加一個小裝飾：小翅膀愛心 */
         .card::before {
             content: "♥給書瑀♥";
             position: absolute;
@@ -44,34 +46,40 @@
             transform: translateX(-50%);
             background: #ff80ab;
             color: white;
-            padding: 5px 15px;
+            padding: 5px 20px;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             font-weight: bold;
             box-shadow: 0 4px 10px rgba(255, 128, 171, 0.3);
+            letter-spacing: 1px;
         }
 
+        /* 文字內容：置中且可愛化 */
         #text-content {
-            font-size: 1.15rem;
-            color: #6d5c5c; /* 暖咖啡色文字，比純黑溫柔 */
-            line-height: 1.8;
-            min-height: 120px;
+            font-size: 1.25rem; /* 稍微放大，比較可愛 */
+            color: #7d6e6e; /* 柔和的咖啡灰 */
+            line-height: 2; /* 增加行高，看起來比較鬆軟 */
             white-space: pre-wrap;
             transition: opacity 0.4s;
-            padding-top: 15px; /* 為上面的標籤騰出空間 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 160px; /* 確保內容區塊有固定高度供置中 */
+            font-weight: 500;
         }
 
         .btn-group {
             display: none;
-            margin-top: 30px;
+            margin-top: 20px;
             gap: 15px;
             justify-content: center;
         }
 
         button {
-            padding: 12px 28px;
+            padding: 12px 30px;
             border: none;
-            border-radius: 25px; /* 更圓潤的按鈕 */
+            border-radius: 25px;
             cursor: pointer;
             font-size: 1rem;
             font-weight: bold;
@@ -81,43 +89,38 @@
         button:active { transform: scale(0.95); }
 
         .yes-btn { 
-            background-color: #ff80ab; /* 玫瑰粉 */
+            background-color: #ff80ab;
             color: white; 
             box-shadow: 0 4px 10px rgba(255, 128, 171, 0.4);
         }
 
         .maybe-btn { 
-            background-color: #fce4ec; /* 淺粉 */
+            background-color: #fce4ec;
             color: #ad8a8a; 
         }
 
-        .hint { color: #d1b8b8; font-size: 0.85rem; margin-top: 20px; }
+        .hint { 
+            color: #d1b8b8; 
+            font-size: 0.85rem; 
+            margin-top: 20px; 
+            font-weight: bold;
+        }
 
-        /* 3. 動態愛心粒子系統的樣式 */
+        /* 3. 動態愛心粒子樣式 */
         .heart-particle {
             position: absolute;
             font-size: 20px;
-            color: #ffb6c1; /* 淺粉色愛心 */
+            color: #ffb6c1;
             user-select: none;
             z-index: 1;
             animation: riseAndFade 4s linear forwards;
             opacity: 0;
         }
 
-        /* 愛心飛舞並淡出的動畫 */
         @keyframes riseAndFade {
-            0% {
-                transform: translateY(10vh) scale(0) rotate(0deg);
-                opacity: 0;
-            }
-            20% {
-                opacity: 0.7; /* 飛出來時顯現 */
-                transform: translateY(5vh) scale(1) rotate(0deg);
-            }
-            100% {
-                transform: translateY(-110vh) scale(1.2) rotate(15deg); /* 向上飛出螢幕 */
-                opacity: 0; /* 淡出 */
-            }
+            0% { transform: translateY(10vh) scale(0) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.7; transform: translateY(5vh) scale(1) rotate(0deg); }
+            100% { transform: translateY(-110vh) scale(1.2) rotate(15deg); opacity: 0; }
         }
     </style>
 </head>
@@ -129,22 +132,21 @@
     <div id="text-content">書瑀 有一段話想對妳說...</div>
     <div class="hint" id="hint"> 點擊卡片繼續 ✨ </div>
     <div class="btn-group" id="btn-group">
-        <button class="yes-btn" onclick="sendResponse('好，我也願意')">好</button>
+        <button class="yes-btn" onclick="sendResponse('好，我也願意')">好 ❤️</button>
         <button class="maybe-btn" onclick="sendResponse('??')">??</button>
     </div>
 </div>
 
 <script>
-    // 保留你原來的內容和 Webhook URL
+    // 修正了語法錯誤的文字內容
     const messages = [
         "妳曾說過 <br>我是個內斂的人",
         "確實 <br>身為 INTJ <br>我可能不太擅長說些感性的話",
-        "妳也問過我 <br>我是不是很會照顧人 <br>而我當時回答妳說 看人",
-        "現在我想告訴妳我想照顧的人是誰了",
-        "妳書瑀 <br>就是我想照顧的那個人",
+        "妳也問過我 <br>我是不是很會照顧人 <br>而我當時回答妳說「看人」",
+        "現在我想告訴妳 <br>我想照顧的人是誰了",
+        "答案就是妳 書瑀 <br>就是我想照顧的那個人"
     ];
 
-    // 這裡填入妳的 Discord Webhook 網址
     const webhookURL = "https://discord.com/api/webhooks/1486689408504561695/iBd77xcOIcmDF_l8BX_acqxCdBVOE3uzzrelQNzCo0Dt8oFCtRQyG-BNHC8-ffHjAYOF";
 
     let currentStep = -1;
@@ -159,8 +161,7 @@
                 textElement.style.opacity = 1;
             }, 300);
         } else if (currentStep === messages.length) {
-            // 保留妳原來的最後一句話
-            textElement.innerHTML = "最後我想問妳 <br>妳願意給我照顧 跟我再一起嗎";
+            textElement.innerHTML = "最後我想問妳 <br>妳願意給我照顧 <br>跟我在一起嗎？";
             document.getElementById('btn-group').style.display = 'flex';
             document.getElementById('hint').style.visibility = 'hidden';
             document.getElementById('card').onclick = null;
@@ -174,49 +175,30 @@
             body: JSON.stringify({ content: `💖 告白回覆：**${answer}**` })
         }).then(() => {
             alert("謝謝妳的回覆，我收到了！");
-            // 點擊後畫面變乾淨的紅愛心
             document.body.innerHTML = "<h1 style='color:#ff80ab; font-size: 5rem; z-index: 100;'>❤️</h1>";
-            // 清空愛心粒子
             document.getElementById('particle-container').innerHTML = '';
         });
     }
 
-    // --- 4. 生成動態愛心的 JavaScript 邏輯 ---
     function spawnHeart() {
         const container = document.getElementById('particle-container');
         const heart = document.createElement('div');
         heart.classList.add('heart-particle');
-        heart.innerHTML = '❤️'; // 飛舞的愛心符號
-        
-        // 隨機設定水平位置 (0% ~ 100% 螢幕寬度)
+        heart.innerHTML = '❤️';
         const leftPos = Math.random() * 100;
         heart.style.left = leftPos + 'vw';
-        
-        // 隨機設定飛舞速度 (3秒 ~ 5秒)
         const duration = Math.random() * 2 + 3;
         heart.style.animationDuration = duration + 's';
-        
-        // 隨機設定愛心大小 (15px ~ 25px)
         const size = Math.random() * 10 + 15;
         heart.style.fontSize = size + 'px';
-
-        // 隨機設定粉色色調，增加層次
         const colors = ['#ffb6c1', '#ff80ab', '#fccbda', '#f8bbd0'];
         heart.style.color = colors[Math.floor(Math.random() * colors.length)];
-
         container.appendChild(heart);
-
-        // 動畫結束後自動移除元素，防止消耗過多內存
-        setTimeout(() => {
-            heart.remove();
-        }, duration * 1000);
+        setTimeout(() => heart.remove(), duration * 1000);
     }
 
-    // 每 1.2 秒生成一個新的漂浮愛心
     setInterval(spawnHeart, 1200);
-    // 初始化時先生成一個
     spawnHeart();
-
 </script>
 </body>
 </html>
