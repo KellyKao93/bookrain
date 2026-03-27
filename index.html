@@ -5,20 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>給書瑀</title>
     <style>
-        /* 1. 將網頁設為純白底 */
         body {
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: #ffffff; /* 純白底 */
+            background: #ffffff;
             font-family: "Quicksand", "PingFang TC", "Microsoft JhengHei", sans-serif;
             overflow: hidden;
             position: relative;
         }
 
-        /* 2. 可愛蓬鬆質感卡片設計 */
         .card {
             background: #ffffff;
             padding: 50px 30px;
@@ -32,7 +30,7 @@
             transition: all 0.5s ease;
             z-index: 10;
             position: relative;
-            min-height: 250px; /* 固定最小高度，確保文字置中效果明顯 */
+            min-height: 250px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -51,22 +49,22 @@
             font-size: 0.9rem;
             font-weight: bold;
             box-shadow: 0 4px 10px rgba(255, 128, 171, 0.3);
-            letter-spacing: 1px;
         }
 
-        /* 文字內容：置中且可愛化 */
         #text-content {
-            font-size: 1.25rem; /* 稍微放大，比較可愛 */
-            color: #7d6e6e; /* 柔和的咖啡灰 */
-            line-height: 2; /* 增加行高，看起來比較鬆軟 */
+            font-size: 1.25rem;
+            color: #7d6e6e;
+            line-height: 2;
             white-space: pre-wrap;
-            transition: opacity 0.4s;
+            /* 修正：縮短 transition 時間到 0.2s 讓切換更乾淨 */
+            transition: opacity 0.2s ease-in-out; 
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            min-height: 160px; /* 確保內容區塊有固定高度供置中 */
+            min-height: 160px;
             font-weight: 500;
+            opacity: 1;
         }
 
         .btn-group {
@@ -83,21 +81,11 @@
             cursor: pointer;
             font-size: 1rem;
             font-weight: bold;
-            transition: transform 0.2s, background-color 0.3s;
+            transition: 0.2s;
         }
 
-        button:active { transform: scale(0.95); }
-
-        .yes-btn { 
-            background-color: #ff80ab;
-            color: white; 
-            box-shadow: 0 4px 10px rgba(255, 128, 171, 0.4);
-        }
-
-        .maybe-btn { 
-            background-color: #fce4ec;
-            color: #ad8a8a; 
-        }
+        .yes-btn { background-color: #ff80ab; color: white; }
+        .maybe-btn { background-color: #fce4ec; color: #ad8a8a; }
 
         .hint { 
             color: #d1b8b8; 
@@ -106,7 +94,6 @@
             font-weight: bold;
         }
 
-        /* 3. 動態愛心粒子樣式 */
         .heart-particle {
             position: absolute;
             font-size: 20px;
@@ -138,13 +125,12 @@
 </div>
 
 <script>
-    // 修正了語法錯誤的文字內容
     const messages = [
         "妳曾說過 <br>我是個內斂的人",
         "確實 <br>身為 INTJ <br>我可能不太擅長說些感性的話",
         "妳也問過我 <br>我是不是很會照顧人 <br>而我當時回答妳說「看人」",
         "現在我想告訴妳 <br>我想照顧的人是誰了",
-        "答案就是妳 書瑀 <br>就是我想照顧的那個人"
+        "答案就是妳 書瑀 <br>妳就是我想照顧的那個人"
     ];
 
     const webhookURL = "https://discord.com/api/webhooks/1486689408504561695/iBd77xcOIcmDF_l8BX_acqxCdBVOE3uzzrelQNzCo0Dt8oFCtRQyG-BNHC8-ffHjAYOF";
@@ -152,20 +138,26 @@
     let currentStep = -1;
 
     function nextStep() {
-        currentStep++;
         const textElement = document.getElementById('text-content');
-        if (currentStep < messages.length) {
-            textElement.style.opacity = 0;
-            setTimeout(() => {
+        
+        // 1. 先讓文字完全消失
+        textElement.style.opacity = 0;
+
+        // 2. 等淡出動畫結束 (200ms) 後再換字並淡入
+        setTimeout(() => {
+            currentStep++;
+            
+            if (currentStep < messages.length) {
                 textElement.innerHTML = messages[currentStep];
+                textElement.style.opacity = 1; // 換完字立刻淡入
+            } else if (currentStep === messages.length) {
+                textElement.innerHTML = "最後我想問妳 <br>妳願意給我照顧 <br>跟我在一起嗎？";
                 textElement.style.opacity = 1;
-            }, 300);
-        } else if (currentStep === messages.length) {
-            textElement.innerHTML = "最後我想問妳 <br>妳願意給我照顧 <br>跟我在一起嗎？";
-            document.getElementById('btn-group').style.display = 'flex';
-            document.getElementById('hint').style.visibility = 'hidden';
-            document.getElementById('card').onclick = null;
-        }
+                document.getElementById('btn-group').style.display = 'flex';
+                document.getElementById('hint').style.visibility = 'hidden';
+                document.getElementById('card').onclick = null;
+            }
+        }, 210); // 稍微多給 10ms 緩衝，確保換字時舊字已完全透明
     }
 
     function sendResponse(answer) {
@@ -176,7 +168,6 @@
         }).then(() => {
             alert("謝謝妳的回覆，我收到了！");
             document.body.innerHTML = "<h1 style='color:#ff80ab; font-size: 5rem; z-index: 100;'>❤️</h1>";
-            document.getElementById('particle-container').innerHTML = '';
         });
     }
 
