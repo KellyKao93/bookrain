@@ -174,16 +174,21 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ content: `💖 告白回覆：**${answer}**` })
         }).then(() => {
-            // --- 修改部分：不要清空 body，只修改卡片內容 ---
             const textElement = document.getElementById('text-content');
             const btnGroup = document.getElementById('btn-group');
             
             // 隱藏按鈕
             btnGroup.style.display = 'none';
-            // 顯示已收到
+            // 讓舊文字淡出
             textElement.style.opacity = 0;
+            
             setTimeout(() => {
-                textElement.innerHTML = "訊息已收到 ❤️";
+                // --- 判斷回覆內容並顯示對應文字 ---
+                if (answer === '好，我也願意') {
+                    textElement.innerHTML = "好，我也願意❤️";
+                } else {
+                    textElement.innerHTML = "｡ﾟヽ(ﾟ´Д`)ﾉﾟ｡";
+                }
                 textElement.style.opacity = 1;
             }, 215);
             
