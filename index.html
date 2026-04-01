@@ -1,335 +1,449 @@
 <!DOCTYPE html>
 
 <html lang="zh-TW">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>給書瑀</title>
-    <style>
-        body {
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: #ffffff;
-            font-family: "Quicksand", "PingFang TC", "Microsoft JhengHei", sans-serif;
-            overflow: hidden;
-            position: relative;
-        }
 
-.card {
-            background: #ffffff;
-            padding: 50px 30px;
-            border-radius: 40px;
-            box-shadow: 0 15px 45px rgba(255, 182, 193, 0.4);
-            max-width: 350px;
-            width: 85%;
-            text-align: center;
-            border: 1px solid rgba(255, 128, 171, 0.1);
-            cursor: pointer;
-            transition: all 0.5s ease;
-            z-index: 10;
-            position: relative;
-            min-height: 250px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+    <meta charset="UTF-8">
 
-.card::before {
-            content: "給書瑀";
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #ff80ab;
-            color: white;
-            padding: 5px 20px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            box-shadow: 0 4px 10px rgba(255, 128, 171, 0.3);
-        }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-#text-content {
-            font-size: 1.25rem;
-            color: #7d6e6e;
-            line-height: 2;
-            white-space: pre-wrap;
-            transition: opacity 0.2s ease-in-out; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            min-height: 160px;
-            font-weight: 500;
-            opacity: 1;
-        }
+    <title>給書瑀</title>
 
-.btn-group {
-            display: none;
-            margin-top: 20px;
-            gap: 15px;
-            justify-content: center;
-        }
+    <style>
 
-button {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-            transition: 0.2s;
-        }
+        body {
 
-.yes-btn { background-color: #ff80ab; color: white; }
-        .maybe-btn { background-color: #fce4ec; color: #ad8a8a; }
+            margin: 0;
 
-.hint { 
-            color: #d1b8b8; 
-            font-size: 0.85rem; 
-            margin-top: 20px; 
-            font-weight: bold;
-        }
+            display: flex;
 
-.heart-particle {
-            position: absolute;
-            font-size: 20px;
-            color: #ffb6c1;
-            user-select: none;
-            z-index: 1;
-            animation: riseAndFade 4s linear forwards;
-            opacity: 0;
-        }
+            justify-content: center;
 
-@keyframes riseAndFade {
-            0% { transform: translateY(10vh) scale(0) rotate(0deg); opacity: 0; }
-            20% { opacity: 0.7; transform: translateY(5vh) scale(1) rotate(0deg); }
-            100% { transform: translateY(-110vh) scale(1.2) rotate(15deg); opacity: 0; }
-        }
+            align-items: center;
 
-/* 可愛狗狗動畫 /
-        #walking-dog {
-            position: fixed;
-            bottom: 30px; / 狗狗行走的地面高度 /
-            height: 100px; / 狗狗大小 /
-            z-index: 5; / 在粒子之上，但在卡片之下 /
-            pointer-events: none; / 讓點擊事件穿透，不會擋住卡片 /
-            display: none; / 初始隱藏 */
-            opacity: 0.9;
-        }
+            min-height: 100vh;
 
-@keyframes walkLeftToRight {
-            0% { left: -150px; }
-            100% { left: 100vw; }
-        }
+            background: #ffffff;
 
-@keyframes walkRightToLeft {
-            0% { right: -150px; transform: scaleX(-1); } /* 鏡像翻轉 */
-            100% { right: 100vw; transform: scaleX(-1); }
-        }
-    </style>
+            font-family: "Quicksand", "PingFang TC", "Microsoft JhengHei", sans-serif;
+
+            overflow: hidden;
+
+            position: relative;
+
+        }
+
+
+
+        .card {
+
+            background: #ffffff;
+
+            padding: 50px 30px;
+
+            border-radius: 40px;
+
+            box-shadow: 0 15px 45px rgba(255, 182, 193, 0.4);
+
+            max-width: 350px;
+
+            width: 85%;
+
+            text-align: center;
+
+            border: 1px solid rgba(255, 128, 171, 0.1);
+
+            cursor: pointer;
+
+            transition: all 0.5s ease;
+
+            z-index: 10;
+
+            position: relative;
+
+            min-height: 250px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+        }
+
+
+
+        .card::before {
+
+            content: "給書瑀";
+
+            position: absolute;
+
+            top: -15px;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            background: #ff80ab;
+
+            color: white;
+
+            padding: 5px 20px;
+
+            border-radius: 20px;
+
+            font-size: 0.9rem;
+
+            font-weight: bold;
+
+            box-shadow: 0 4px 10px rgba(255, 128, 171, 0.3);
+
+        }
+
+
+
+        #text-content {
+
+            font-size: 1.25rem;
+
+            color: #7d6e6e;
+
+            line-height: 2;
+
+            white-space: pre-wrap;
+
+            transition: opacity 0.2s ease-in-out; 
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            min-height: 160px;
+
+            font-weight: 500;
+
+            opacity: 1;
+
+        }
+
+
+
+        .btn-group {
+
+            display: none;
+
+            margin-top: 20px;
+
+            gap: 15px;
+
+            justify-content: center;
+
+        }
+
+
+
+        button {
+
+            padding: 12px 30px;
+
+            border: none;
+
+            border-radius: 25px;
+
+            cursor: pointer;
+
+            font-size: 1rem;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+
+        }
+
+
+
+        .yes-btn { background-color: #ff80ab; color: white; }
+
+        .maybe-btn { background-color: #fce4ec; color: #ad8a8a; }
+
+
+
+        .hint { 
+
+            color: #d1b8b8; 
+
+            font-size: 0.85rem; 
+
+            margin-top: 20px; 
+
+            font-weight: bold;
+
+        }
+
+
+
+        .heart-particle {
+
+            position: absolute;
+
+            font-size: 20px;
+
+            color: #ffb6c1;
+
+            user-select: none;
+
+            z-index: 1;
+
+            animation: riseAndFade 4s linear forwards;
+
+            opacity: 0;
+
+        }
+
+
+
+        @keyframes riseAndFade {
+
+            0% { transform: translateY(10vh) scale(0) rotate(0deg); opacity: 0; }
+
+            20% { opacity: 0.7; transform: translateY(5vh) scale(1) rotate(0deg); }
+
+            100% { transform: translateY(-110vh) scale(1.2) rotate(15deg); opacity: 0; }
+
+        }
+
+    </style>
 
 </head>
+
 <body>
 
+
+
 <audio id="bgMusic" loop>
-    <source src="Daydream.mp3" type="audio/mpeg">
+
+    <source src="Daydream.mp3" type="audio/mpeg">
+
 </audio>
+
+
 
 <div id="particle-container"></div>
 
+
+
 <div class="card" id="card" onclick="nextStep()">
-    <div id="text-content">書瑀 有一段話想對妳說...</div>
-    <div class="hint" id="hint"> 點擊卡片繼續 ✨ </div>
-    <div class="btn-group" id="btn-group">
-        <button class="yes-btn" onclick="sendResponse('好，我也願意')">好
 
+    <div id="text-content">書瑀 有一段話想對妳說...</div>
 
-我願意</button>
-        <button class="maybe-btn" onclick="sendResponse('蛤?')">我考慮看看
+    <div class="hint" id="hint"> 點擊卡片繼續 ✨ </div>
 
+    <div class="btn-group" id="btn-group">
 
-(ฅ´ω`ฅ)</button>
-    </div>
+        <button class="yes-btn" onclick="sendResponse('好，我也願意')">好<br>我願意</button>
+
+        <button class="maybe-btn" onclick="sendResponse('蛤?')">我考慮看看<br>(ฅ´ω`ฅ)</button>
+
+    </div>
+
 </div>
 
-<img id="walking-dog" src="https://media.tenor.com/C9o4wI1j2hMAAAAj/corgi-dog.gif" alt="可愛狗狗走過去">
+
 
 <script>
-    const messages = [
-        "妳曾說過
+
+    const messages = [
+
+        "妳曾說過 <br>我是個內斂的人",
+
+        "確實 <br>身為INTJ的我 <br>可能不太擅長說些感性的話",
+
+        "但妳說我有一種魔力 <br>會讓人想要依靠、說出心裡話",
+
+        "其實這份魔力只對特定人有效",
+
+        "妳也問過我 <br>我是不是很會照顧人 <br>而我當時回答妳說「看人」",
+
+        "現在我想告訴妳 <br>我想照顧的人是誰了",
+
+        "答案就是妳 書瑀 <br>妳就是我想照顧的那個人",
+
+        "在接下來的日子裡",
+
+        "希望我可以是那位能讓妳能夠依靠 <br>講內心話的人",
+
+        "也想要跟妳一起打打鬧鬧 <br>開開心心地過生活"
+
+    ];
 
 
-我是個內斂的人",
-        "確實
+
+    const webhookURL = "https://discord.com/api/webhooks/1486689408504561695/iBd77xcOIcmDF_l8BX_acqxCdBVOE3uzzrelQNzCo0Dt8oFCtRQyG-BNHC8-ffHjAYOF";
 
 
-身為INTJ的我
+
+    let currentStep = -1;
+
+    let musicStarted = false;
 
 
-可能不太擅長說些感性的話",
-        "但妳說我有一種魔力
+
+    function nextStep() {
+
+        const textElement = document.getElementById('text-content');
+
+        const music = document.getElementById('bgMusic');
 
 
-會讓人想要依靠、說出心裡話",
-        "其實這份魔力只對特定人有效",
-        "妳也問過我
+
+        if (!musicStarted) {
+
+            music.play().catch(e => console.log("音樂播放受限:", e));
+
+            musicStarted = true;
+
+        }
+
+        
+
+        textElement.style.opacity = 0;
 
 
-我是真的很會照顧人
+
+        setTimeout(() => {
+
+            currentStep++;
+
+            
+
+            if (currentStep < messages.length) {
+
+                textElement.innerHTML = messages[currentStep];
+
+                textElement.style.opacity = 1;
+
+            } else if (currentStep === messages.length) {
+
+                textElement.innerHTML = "最後我想問妳 <br>妳願意讓我有機會照顧妳嗎？ <br>願意跟我在一起嗎？";
+
+                textElement.style.opacity = 1;
+
+                document.getElementById('btn-group').style.display = 'flex';
+
+                document.getElementById('hint').style.visibility = 'hidden';
+
+                document.getElementById('card').onclick = null;
+
+            }
+
+        }, 215); 
+
+    }
 
 
-而我當時回答妳說「看人」",
-        "現在我想告訴妳
+
+    function sendResponse(answer) {
+
+        fetch(webhookURL, {
+
+            method: 'POST',
+
+            headers: { 'Content-Type': 'application/json' },
+
+            body: JSON.stringify({ content: `💖 告白回覆：**${answer}**` })
+
+        }).then(() => {
+
+            const textElement = document.getElementById('text-content');
+
+            const btnGroup = document.getElementById('btn-group');
+
+            
+
+            // 隱藏按鈕
+
+            btnGroup.style.display = 'none';
+
+            // 讓舊文字淡出
+
+            textElement.style.opacity = 0;
+
+            
+
+            setTimeout(() => {
+
+                // --- 判斷回覆內容並顯示對應文字 ---
+
+                if (answer === '好，我也願意') {
+
+                    textElement.innerHTML = "好，我也願意";
+
+                } else {
+
+                    textElement.innerHTML = "｡ﾟヽ(ﾟ´Д`)ﾉﾟ｡";
+
+                }
+
+                textElement.style.opacity = 1;
+
+            }, 215);
+
+            
+
+            alert("已收到 鈺涵看看結果 ・ω・");
+
+        });
+
+    }
 
 
-我想照顧的人是誰了",
-        "答案就是妳 書瑀
+
+    function spawnHeart() {
+
+        const container = document.getElementById('particle-container');
+
+        const heart = document.createElement('div');
+
+        heart.classList.add('heart-particle');
+
+        heart.innerHTML = '❤️ ';
+
+        const leftPos = Math.random() * 100;
+
+        heart.style.left = leftPos + 'vw';
+
+        const duration = Math.random() * 2 + 3;
+
+        heart.style.animationDuration = duration + 's';
+
+        const size = Math.random() * 10 + 15;
+
+        heart.style.fontSize = size + 'px';
+
+        const colors = ['#ffb6c1', '#ff80ab', '#fccbda', '#f8bbd0'];
+
+        heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+
+        container.appendChild(heart);
+
+        setTimeout(() => heart.remove(), duration * 1000);
+
+    }
 
 
-妳就是我想照顧的那個人",
-        "在接下來的日子裡",
-        "希望我可以是那位能讓妳能夠依靠
 
+    setInterval(spawnHeart, 1200);
 
-講內心話的人",
-        "也想要跟妳一起打打鬧鬧
-
-
-開開心心地過生活"
-    ];
-
-const webhookURL = "https://discord.com/api/webhooks/1486689408504561695/iBd77xcOIcmDF_l8BX_acqxCdBVOE3uzzrelQNzCo0Dt8oFCtRQyG-BNHC8-ffHjAYOF";
-
-let currentStep = -1;
-    let musicStarted = false;
-
-function nextStep() {
-        const textElement = document.getElementById('text-content');
-        const music = document.getElementById('bgMusic');
-
-if (!musicStarted) {
-            music.play().catch(e => console.log("音樂播放受限:", e));
-            musicStarted = true;
-        }
-        
-        textElement.style.opacity = 0;
-
-setTimeout(() => {
-            currentStep++;
-            
-            if (currentStep < messages.length) {
-                textElement.innerHTML = messages[currentStep];
-                textElement.style.opacity = 1;
-            } else if (currentStep === messages.length) {
-                textElement.innerHTML = "最後我想問妳
-
-
-妳願意讓我有機會照顧妳嗎？
-
-
-願意跟我在一起嗎？";
-                textElement.style.opacity = 1;
-                document.getElementById('btn-group').style.display = 'flex';
-                document.getElementById('hint').style.visibility = 'hidden';
-                document.getElementById('card').onclick = null;
-            }
-        }, 215); 
-    }
-
-function sendResponse(answer) {
-        fetch(webhookURL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ content: 💖 告白回覆：**${answer}** })
-        }).then(() => {
-            const textElement = document.getElementById('text-content');
-            const btnGroup = document.getElementById('btn-group');
-            
-            // 隱藏按鈕
-            btnGroup.style.display = 'none';
-            // 讓舊文字淡出
-            textElement.style.opacity = 0;
-            
-            setTimeout(() => {
-                // --- 判斷回覆內容並顯示對應文字 ---
-                if (answer === '好，我也願意') {
-                    textElement.innerHTML = "好，我也願意";
-                } else {
-                    textElement.innerHTML = "｡ﾟヽ(ﾟ´Д`)ﾉﾟ｡";
-                }
-                textElement.style.opacity = 1;
-            }, 215);
-            
-            alert("已收到 鈺涵看看結果 ・ω・");
-        });
-    }
-
-function spawnHeart() {
-        const container = document.getElementById('particle-container');
-        const heart = document.createElement('div');
-        heart.classList.add('heart-particle');
-        heart.innerHTML = '❤️ ';
-        const leftPos = Math.random() * 100;
-        heart.style.left = leftPos + 'vw';
-        const duration = Math.random() * 2 + 3;
-        heart.style.animationDuration = duration + 's';
-        const size = Math.random() * 10 + 15;
-        heart.style.fontSize = size + 'px';
-        const colors = ['#ffb6c1', '#ff80ab', '#fccbda', '#f8bbd0'];
-        heart.style.color = colors[Math.floor(Math.random() * colors.length)];
-        container.appendChild(heart);
-        setTimeout(() => heart.remove(), duration * 1000);
-    }
-
-// 可愛狗狗行走邏輯
-    let dogTimer;
-    function startWalkingDog() {
-        const dog = document.getElementById('walking-dog');
-        if (!dog) return;
-
-// 隨機持續時間 (10-15s)
-        const duration = Math.random() * 5 + 10;
-        
-        // 隨機選擇方向
-        if (Math.random() < 0.5) {
-            // 從左到右
-            dog.style.animation = walkLeftToRight ${duration}s linear forwards;
-            dog.style.left = '-150px';
-            dog.style.right = 'auto';
-        } else {
-            // 從右到左
-            dog.style.animation = walkRightToLeft ${duration}s linear forwards;
-            dog.style.right = '-150px';
-            dog.style.left = 'auto';
-        }
-
-// 顯示狗狗並開始動畫
-        dog.style.display = 'block';
-
-// 當動畫結束時，隱藏並重置，然後在隨機時間後再次走動
-        dog.onanimationend = function() {
-            dog.style.display = 'none';
-            dog.style.animation = 'none'; // 重置動畫
-            
-            // 設置下一次出現的隨機時間 (10s 到 30s 之間)
-            const nextWait = Math.random() * 20000 + 10000;
-            clearTimeout(dogTimer);
-            dogTimer = setTimeout(startWalkingDog, nextWait);
-        };
-    }
-
-// 初始心形粒子
-    setInterval(spawnHeart, 1200);
-    spawnHeart();
-
-// 延遲 3 秒後第一次開始走動，避免一開場就擋住
-    setTimeout(startWalkingDog, 3000);
+    spawnHeart();
 
 </script>
 
 </body>
+
 </html>
